@@ -13,7 +13,7 @@
     "exactOptionalPropertyTypes": false,
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -25,12 +25,14 @@
     /* Linting */
     "strict": false,
     "noFallthroughCasesInSwitch": true,
-    "types": ["node", "vite/client", "react-webcam", "leaflet", "react-leaflet"],
+    "types": ["node", "vite/client"],
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "paths": {
       "*": ["./src/*"]
-    }
+    },
+    "allowJs": true,
+    "checkJs": false
   },
-  "include": ["src"],
+  "include": ["src", "src/types/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
