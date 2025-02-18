@@ -218,12 +218,52 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-}).on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${port} is already in use`);
+// Add graceful shutdown handler
+let server;
+
+const startServer = () => {
+  server = app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${port} is already in use`);
+    } else {
+      console.error('Error starting server:', err);
+    }
+  });
+};
+
+// Graceful shutdown handling
+const shutdown = () => {
+  if (server) {
+    server.close(() => {
+      console.log('Server shutdown complete');
+      process.exit(0);
+    });
+
+    // Force close after 10s
+    setTimeout(() => {
+      console.error('Could not close connections in time, forcefully shutting down');
+      process.exit(1);
+    }, 10000);
   } else {
-    console.error('Error starting server:', err);
+    process.exit(0);
   }
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  shutdown();
 });
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  shutdown();
+});
+
+// Start the server
+startServer();

@@ -5,8 +5,8 @@
   "description": "KKMK Foundation Application",
   "type": "module",
   "scripts": {
-    "start": "cd backend && node server.js",
-    "build": "cd frontend && npm install --legacy-peer-deps && npm run build && cd ../backend && npm install",
+    "start": "cd backend && NODE_ENV=production node server.js",
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build && cd ../backend && npm install --production",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "install": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps",
     "lint": "eslint .",
