@@ -4,7 +4,6 @@ import * as faceapi from 'face-api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import '../styles/FaceVerification.css';
-import '../types/face-api';
 
 interface FaceVerificationProps {
   onClose: () => void;
