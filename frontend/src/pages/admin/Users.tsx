@@ -249,11 +249,6 @@ const filteredVolunteers = getSortedVolunteers(volunteers.filter(volunteer => {
     ));
   };
 
-  const handleActionClick = (volunteerId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveDropdown(activeDropdown === volunteerId ? null : volunteerId);
-  };
-
   const handleAction = async (action: string, volunteer: any) => {
     try {
       const token = localStorage.getItem('token');

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { PATHS } from '../../routes/paths';
 import '../../styles/Auth.css';
 import { motion, AnimatePresence } from 'framer-motion';
 

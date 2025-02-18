@@ -130,14 +130,6 @@ const EventPage: React.FC = () => {
     }
   };
 
-  const handleVolunteerTime = () => {
-    navigate("/time-volunteer");
-  };
-
-  const handleVolunteerTreasure = () => {
-    navigate("/treasure-volunteer");
-  };
-
   const handleCardClick = (eventId: number) => {
     navigate(`/event/${eventId}`);
   };
