@@ -90,14 +90,14 @@ const LoginFaceVerification: React.FC<LoginFaceVerificationProps> = ({ onClose, 
       if (video.readyState === 4) {
         ctx.drawImage(video, 0, 0);
         
-        const detection = await faceapi
+        const detection = await (await faceapi
           .detectSingleFace(
             canvas,
             new faceapi.TinyFaceDetectorOptions({
               inputSize: 224,
               scoreThreshold: 0.5
             })
-          )
+          ))
           .withFaceLandmarks()
           .withFaceDescriptor();
 

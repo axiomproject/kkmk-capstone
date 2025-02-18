@@ -30,6 +30,9 @@ declare module 'react-icons/fa' {
   export const FaUpload: IconType;
   export const FaBell: IconType;
   export const FaEye: IconType;
+  export const FaInfoCircle: IconType;
+  export const FaHeadset: IconType;
+  export const FaShare: IconType;
 }
 
 declare module 'react-icons/fi' {

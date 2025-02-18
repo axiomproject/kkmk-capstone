@@ -4,6 +4,7 @@ import * as faceapi from 'face-api.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import '../styles/FaceVerification.css';
+import '../types/face-api';
 
 interface FaceVerificationProps {
   onClose: () => void;
@@ -94,14 +95,14 @@ const FaceVerification: React.FC<FaceVerificationProps> = ({ onClose, onSuccess 
       if (video.readyState === 4) {
         ctx.drawImage(video, 0, 0);
         
-        const detection = await faceapi
+        const detection = await (await faceapi
           .detectSingleFace(
             canvas,
             new faceapi.TinyFaceDetectorOptions({
               inputSize: 224,
               scoreThreshold: 0.5
             })
-          )
+          ))
           .withFaceLandmarks()
           .withFaceDescriptor();
 
