@@ -1,0 +1,88 @@
+.interactive-map-container {
+  padding: 20px;
+  height: calc(100vh - 100px);
+}
+
+.interactive-map-container h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.interactive-map {
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.marker-popup {
+  padding: 10px;
+}
+
+.marker-popup h3 {
+  margin: 0 0 10px 0;
+  color: #2c5282;
+}
+
+.marker-image-container {
+  width: 100%;
+  max-height: 150px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.marker-event-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.view-details-btn {
+  background-color: #2c5282;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.view-details-btn:hover {
+  background-color: #1a365d;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.map-filters {
+  margin-right: 20px;
+}
+
+.location-filter {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.custom-event-marker {
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
