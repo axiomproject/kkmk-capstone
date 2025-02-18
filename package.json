@@ -1,13 +1,19 @@
 {
-  "name": "kkmktest",
+  "name": "kkmk",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "KKMK Foundation Application",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "start": "cd backend && node server.js",
+    "build": "cd frontend && npm install && npm run build",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "install": "cd backend && npm install && cd ../frontend && npm install",
     "lint": "eslint .",
     "preview": "vite preview"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "@arcgis/core": "^4.31.6",
@@ -34,6 +40,7 @@
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "chart.js": "^4.4.7",
+    "concurrently": "^8.0.1",
     "cors": "^2.8.5",
     "esri-loader": "^3.7.0",
     "express": "^4.21.2",
