@@ -24,7 +24,7 @@ const contentRoutes = require('./routes/contentRoutes'); // Import content route
 const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 const app = express();
-const port = process.env.PORT || 5175; // Update port configuration for Railway
+const port = 5175; // Changed port to avoid conflicts
 
 const forumUploadsDir = path.join(__dirname, 'uploads', 'forum');
 if (!fs.existsSync(forumUploadsDir)) {
@@ -41,9 +41,9 @@ db.connect()
     console.error('Error connecting to PostgreSQL:', error);
   });
 
-// Update CORS configuration for both development and production
+// Update CORS configuration to allow credentials
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://kkmk-capstone-production.up.railway.app'],
+  origin: 'http://localhost:5173', // Frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -120,14 +120,6 @@ app.use('/uploads', (req, res, next) => {
 // Make sure this comes before your routes
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
-
-// Serve static frontend files - Add this before routes
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
-// Add this after all API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-});
 
 // Update middleware to only log errors
 app.use((req, res, next) => {
@@ -218,52 +210,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Add graceful shutdown handler
-let server;
-
-const startServer = () => {
-  server = app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running on port ${port}`);
-  }).on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-      console.error(`Port ${port} is already in use`);
-    } else {
-      console.error('Error starting server:', err);
-    }
-  });
-};
-
-// Graceful shutdown handling
-const shutdown = () => {
-  if (server) {
-    server.close(() => {
-      console.log('Server shutdown complete');
-      process.exit(0);
-    });
-
-    // Force close after 10s
-    setTimeout(() => {
-      console.error('Could not close connections in time, forcefully shutting down');
-      process.exit(1);
-    }, 10000);
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${port} is already in use`);
   } else {
-    process.exit(0);
+    console.error('Error starting server:', err);
   }
-};
-
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  shutdown();
 });
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  shutdown();
-});
-
-// Start the server
-startServer();
