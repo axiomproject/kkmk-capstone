@@ -6,6 +6,30 @@ declare module 'react-icons/fa' {
   export const FaClock: IconType;
   export const FaPhoneAlt: IconType;
   export const FaEnvelope: IconType;
+  export const FaCalendarPlus: IconType;
+  export const FaGraduationCap: IconType;
+  export const FaArrowDown: IconType;
+  export const FaArrowRight: IconType;
+  export const FaArrowUp: IconType;
+  export const FaTimes: IconType;
+  export const FaMoneyBillWave: IconType;
+  export const FaChild: IconType;
+  export const FaHandHoldingHeart: IconType;
+  export const FaGift: IconType;
+  export const FaUsers: IconType;
+  export const FaChartLine: IconType;
+  export const FaUserCircle: IconType;
+  export const FaChartBar: IconType;
+  export const FaCheck: IconType;
+  export const FaEdit: IconType;
+  export const FaTrash: IconType;
+  export const FaPlus: IconType;
+  export const FaTrashAlt: IconType;
+  export const FaUserPlus: IconType;
+  export const FaSearch: IconType;
+  export const FaUpload: IconType;
+  export const FaBell: IconType;
+  export const FaEye: IconType;
 }
 
 declare module 'react-icons/fi' {
