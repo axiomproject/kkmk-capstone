@@ -24,7 +24,7 @@ const contentRoutes = require('./routes/contentRoutes'); // Import content route
 const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 const app = express();
-const port = 5175; // Changed port to avoid conflicts
+const port = process.env.PORT || 5175; // Update port configuration for Railway
 
 const forumUploadsDir = path.join(__dirname, 'uploads', 'forum');
 if (!fs.existsSync(forumUploadsDir)) {
@@ -41,9 +41,9 @@ db.connect()
     console.error('Error connecting to PostgreSQL:', error);
   });
 
-// Update CORS configuration to allow credentials
+// Update CORS configuration for both development and production
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: ['http://localhost:5173', 'https://kkmk-capstone-production.up.railway.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -120,6 +120,14 @@ app.use('/uploads', (req, res, next) => {
 // Make sure this comes before your routes
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
+
+// Serve static frontend files - Add this before routes
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Add this after all API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 // Update middleware to only log errors
 app.use((req, res, next) => {

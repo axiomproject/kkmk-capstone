@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "cd backend && node server.js",
-    "build": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "build": "cd frontend && npm install --legacy-peer-deps && npm run build && cd ../backend && npm install",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "install": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps",
     "lint": "eslint .",
