@@ -14,18 +14,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client"],
-    "typeRoots": ["./node_modules/@types", "./src/types"],
-    "paths": {
-      "*": ["./src/*"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts",
-    "src"
-  ],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
