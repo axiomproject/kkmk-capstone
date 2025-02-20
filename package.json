@@ -6,9 +6,9 @@
   },
   "scripts": {
     "install-backend": "cd backend && npm install",
-    "install-frontend": "cd frontend && npm install --legacy-peer-deps && npm install -g vite",
+    "install-frontend": "cd frontend && npm install --legacy-peer-deps",
     "postinstall": "npm run install-backend && npm run install-frontend",
-    "build-frontend": "cd frontend && npm run build",
+    "build-frontend": "cd frontend && npm install --legacy-peer-deps && npx vite build",
     "start": "cd backend && node server.js",
     "build": "npm run build-frontend"
   },
