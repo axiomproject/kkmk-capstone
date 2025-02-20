@@ -37,7 +37,7 @@ const LoginFaceVerification: React.FC<LoginFaceVerificationProps> = ({ onClose, 
       const MODEL_URL = 'https://justadudewhohacks.github.io/face-api.js/models';
       
       // Load models from CDN
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+      await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
       await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
       await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
 
@@ -90,16 +90,15 @@ const LoginFaceVerification: React.FC<LoginFaceVerificationProps> = ({ onClose, 
       if (video.readyState === 4) {
         ctx.drawImage(video, 0, 0);
         
-        const detection = await (await faceapi
+        const detectionResult = await faceapi
           .detectSingleFace(
             canvas,
-            new faceapi.TinyFaceDetectorOptions({
-              inputSize: 224,
-              scoreThreshold: 0.5
-            })
-          ))
+            new faceapi.SsdMobilenetv1Options()
+          )
           .withFaceLandmarks()
           .withFaceDescriptor();
+          
+        const detection = detectionResult || null;
 
         if (detection) {
           setIsFaceDetected(true);

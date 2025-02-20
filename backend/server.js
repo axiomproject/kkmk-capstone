@@ -24,7 +24,7 @@ const contentRoutes = require('./routes/contentRoutes'); // Import content route
 const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 const app = express();
-const port = 5175; // Changed port to avoid conflicts
+const port = process.env.PORT || 5175; // Update port configuration
 
 const forumUploadsDir = path.join(__dirname, 'uploads', 'forum');
 if (!fs.existsSync(forumUploadsDir)) {
@@ -120,6 +120,14 @@ app.use('/uploads', (req, res, next) => {
 // Make sure this comes before your routes
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// After all other routes, serve the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
 // Update middleware to only log errors
 app.use((req, res, next) => {
