@@ -24,8 +24,7 @@ const contentRoutes = require('./routes/contentRoutes'); // Import content route
 const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 const app = express();
-const PORT = process.env.PORT || 5175;
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const port = 5175; // Changed port to avoid conflicts
 
 const forumUploadsDir = path.join(__dirname, 'uploads', 'forum');
 if (!fs.existsSync(forumUploadsDir)) {
@@ -44,7 +43,7 @@ db.connect()
 
 // Update CORS configuration to allow credentials
 app.use(cors({
-  origin: [FRONTEND_URL, 'https://your-frontend-url.onrender.com'], // Add your Render frontend URL
+  origin: 'http://localhost:5173', // Frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -122,6 +121,9 @@ app.use('/uploads', (req, res, next) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Update middleware to only log errors
 app.use((req, res, next) => {
   if (res.statusCode >= 400) {
@@ -177,6 +179,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Update 404 handler
 app.use((req, res) => {
   console.log('404 - Detailed route info:', {
@@ -211,21 +219,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Add production static file serving for frontend build
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/dist')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
-  });
-}
-
-// Update the listen call
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 }).on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${PORT} is already in use`);
+    console.error(`Port ${port} is already in use`);
   } else {
     console.error('Error starting server:', err);
   }
