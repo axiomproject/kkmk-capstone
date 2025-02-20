@@ -24,7 +24,8 @@ const contentRoutes = require('./routes/contentRoutes'); // Import content route
 const userRoutes = require('./routes/userRoutes'); // Import user routes
 
 const app = express();
-const port = 5175; // Changed port to avoid conflicts
+const PORT = process.env.PORT || 5175;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 const forumUploadsDir = path.join(__dirname, 'uploads', 'forum');
 if (!fs.existsSync(forumUploadsDir)) {
@@ -43,7 +44,7 @@ db.connect()
 
 // Update CORS configuration to allow credentials
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: [FRONTEND_URL, 'https://your-frontend-url.onrender.com'], // Add your Render frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -210,11 +211,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+// Add production static file serving for frontend build
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+}
+
+// Update the listen call
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 }).on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.error(`Port ${port} is already in use`);
+    console.error(`Port ${PORT} is already in use`);
   } else {
     console.error('Error starting server:', err);
   }
