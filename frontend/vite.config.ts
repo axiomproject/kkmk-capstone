@@ -28,5 +28,9 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env': {},
     },
+    build: {
+      outDir: '../backend/public',
+      emptyOutDir: true
+    }
   }
 })

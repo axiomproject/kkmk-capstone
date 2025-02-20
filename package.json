@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "install-all": "npm install --legacy-peer-deps && cd frontend && npm install --legacy-peer-deps && cd ../backend && npm install --legacy-peer-deps",
+    "start": "cd backend && node server.js",
+    "dev": "concurrently \"cd backend && node server.js\" \"cd frontend && npm run dev\""
   },
   "dependencies": {
     "@arcgis/core": "^4.31.6",
@@ -59,7 +62,8 @@
     "react-webcam": "^7.2.0",
     "sequelize": "^6.37.5",
     "shadcn-ui": "^0.9.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "concurrently": "^8.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
