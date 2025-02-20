@@ -121,9 +121,6 @@ app.use('/uploads', (req, res, next) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Update middleware to only log errors
 app.use((req, res, next) => {
   if (res.statusCode >= 400) {
@@ -177,12 +174,6 @@ app.use((req, res, next) => {
     params: req.params
   });
   next();
-});
-
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Update 404 handler
