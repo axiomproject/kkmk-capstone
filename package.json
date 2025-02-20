@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "install-backend": "cd backend && npm install",
-    "install-frontend": "cd frontend && npm install --legacy-peer-deps",
-    "build-frontend": "cd frontend && npm install --legacy-peer-deps && npm run build",
+    "install-frontend": "cd frontend && npm install --legacy-peer-deps --no-audit",
+    "build-frontend": "cd frontend && npm install --legacy-peer-deps --no-audit && npm run build",
     "start": "cd backend && node server.js",
     "build": "npm run install-backend && npm run install-frontend && npm run build-frontend",
     "dev": "vite",
