@@ -121,17 +121,6 @@ app.use('/uploads', (req, res, next) => {
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/donations', donationRoutes);
 
-// Add these lines before your routes
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'public')));
-  
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    }
-  });
-}
-
 // Update middleware to only log errors
 app.use((req, res, next) => {
   if (res.statusCode >= 400) {
