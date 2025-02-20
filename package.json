@@ -6,11 +6,11 @@
   },
   "scripts": {
     "install-backend": "cd backend && npm install",
-    "install-frontend": "cd frontend && npm install --legacy-peer-deps",
+    "install-frontend": "cd frontend && npm install --legacy-peer-deps && npm install -g vite",
     "postinstall": "npm run install-backend && npm run install-frontend",
     "build-frontend": "cd frontend && npm run build",
     "start": "cd backend && node server.js",
-    "build": "npm run build-frontend --legacy-peer-deps"
+    "build": "npm run build-frontend"
   },
   "dependencies": {
     "@arcgis/core": "^4.31.6",
